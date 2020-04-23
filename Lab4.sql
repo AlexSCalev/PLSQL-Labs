@@ -1,0 +1,8 @@
+CREATE OR REPLACE TRIGGER odd_update 
+BEFORE UPDATE OF SALARY ON EMPLOYEES 
+FOR EACH ROW
+BEGIN
+IF :NEW.SALARY > :OLD.SALARY AND (MOD(TO_CHAR(SYSDATE,'MI'),2)=0) THEN
+RAISE_APPLICATION_ERROR(-20504,'Error you want update salary in odd minuts please wait even minuts'||to_char(sysdate,'MI'));
+END IF;
+END;
